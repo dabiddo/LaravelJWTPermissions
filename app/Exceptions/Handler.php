@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if($e instanceof AccessDeniedHttpException){
+        /*if($e instanceof AccessDeniedHttpException){
             return shovel()->withError(['message' => $e->getMessage()], 403);
         }
 
@@ -91,6 +91,9 @@ class Handler extends ExceptionHandler
 
         if($e instanceof QueryException){
             return shovel()->withError($e->getMessage(), 400);
+        }*/
+        if($request->wantsJson()){
+            return shovel()->withError($e->getMessage(),$e->getCode());
         }
 
         return parent::render($request, $e);
